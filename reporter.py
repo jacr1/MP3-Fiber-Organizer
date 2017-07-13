@@ -4,17 +4,20 @@ class Reporter():
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def printLine(line):
+    def printLine(self, *args):
         pass
 
     @abstractmethod
-    def clear():
+    def clear(self):
         pass 
 
 class normalReporter(Reporter):
-	
-	def printLine(line):
-		print(line);
 
-	def clear():
-		pass
+    def printLine(self, *args):
+        if (len(args) == 1):
+            print(args[0])
+        elif (len(args) == 2):
+            print(args[0], args[1])
+
+    def clear(self):
+        pass

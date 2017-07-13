@@ -17,11 +17,13 @@ class fileData:
 
 class MP3FiberOrganizer():
 
-    def __init__(self, rootPath):
+    def __init__(self, reporter):
+        self.reporter = reporter
+
+    def run(self, rootPath):
+        self.reporter.clear()
         self.rootPath = rootPath
         self.files = []
-
-    def run(self):
         totalMP3 = 0
         self.getDirs()
         # No files found
@@ -39,17 +41,15 @@ class MP3FiberOrganizer():
                             newFilePath = self.rootPath + "/" + newNames.title + ".mp3"
                             os.rename(filePath, newFilePath)
                             
-                            print("Old filepath: ", filePath)
-                            print("New filepath: ", newFilePath)
+                            self.reporter.printLine("Old filepath: ", filePath)
+                            self.reporter.printLine("New filepath: ", newFilePath)
                         else:
-                            print("Failed: Title or artist blank", self.files[x])
+                            self.reporter.printLine("Failed: Title or artist blank", self.files[x])
                     else:
-                        print("Failed: Unable to split artist and title.", self.files[x])
-        else:
-            print("Failed: No MP3 files found.")
+                        self.reporter.printLine("Failed: Unable to split artist and title", self.files[x])
 
         if (totalMP3 == 0):
-            print("Failed: No MP3 files found.")
+            self.reporter.printLine("Failed: No MP3 files found")
 
     def getDirs(self):
         for (dirpath, dirnames, filenames) in os.walk(self.rootPath):    
