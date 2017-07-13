@@ -44,7 +44,7 @@ class MP3FiberOrganizer():
                             self.reporter.printLine("Old filepath: ", filePath)
                             self.reporter.printLine("New filepath: ", newFilePath)
                         else:
-                            self.reporter.printLine("Failed: Title or artist blank", self.files[x])
+                            self.reporter.printLine("Failed: Title or artist not split by dash", self.files[x])
                     else:
                         self.reporter.printLine("Failed: Unable to split artist and title", self.files[x])
 

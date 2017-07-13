@@ -1,0 +1,1 @@
+/home/jaco1a/.local/bin/pyinstaller -windowed --noconsole --clean --onefile gui.py
