@@ -45,18 +45,14 @@ class MP3FiberOrganizer():
                 else:
                     self.reporter.printLine("Failed: ", self.files[x])
         else:
-            self.reporter.printLine("Failed: ", "No MP3 files found")
+            self.reporter.printLine("Failed: No MP3 files found")
 
     def changeFilesMetadata(self, filePath, newNames):
         # Mutagen lib gets out the metadata
         audio = ID3(filePath)
-        try:
-            print("Artist: ", audio['TPE1'].text[0])
-            print("Track: ", audio['TIT2'].text[0])
-        except KeyError, e:
-            # Doesn't have track fields, so needs to be created. 
-            audio["TIT2"] = TIT2(encoding=3, text=["Title"])
-            audio["TPE1"] = TPE1(encoding=3, text=["Artist"])
+        # Doesn't have track fields, so needs to be created. 
+        audio["TIT2"] = TIT2(encoding=3, text=["Title"])
+        audio["TPE1"] = TPE1(encoding=3, text=["Artist"])
         # set the name and title
         audio['TPE1'].text[0] = newNames.artist.decode('utf-8', 'ignore')
         audio['TIT2'].text[0] = newNames.title.decode('utf-8', 'ignore')
@@ -116,4 +112,11 @@ class MP3FiberOrganizer():
                     self.reporter.printLine("FAILURE: " + fileName)
         else:
             self.reporter.printLine("Failed: No MP3 files found")
-       
+
+
+if __name__ == '__main__':
+    rootPath = "/media/jaco1a/326025077B693289/music"
+
+    organizer = MP3FiberOrganizer(normalReporter())
+    organizer.runDirFileNames(rootPath)
+    organizer.createArtistFolders(rootPath)      
